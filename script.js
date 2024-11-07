@@ -1,4 +1,3 @@
-//your code here
 // Select all the images
 let images = document.getElementsByClassName("image")
 images = [...images];
@@ -7,7 +6,6 @@ images.forEach(image => {
     // When drag starts, store the source image's id in the dataTransfer object
     image.addEventListener("dragstart", (event)=>{
         event.dataTransfer.setData('text', event.target.id);
-        event.target.style.opacity = "0.5";
     })
     // When dragging over an image, allow dropping
     image.addEventListener("dragover", (event)=>{
@@ -18,15 +16,22 @@ images.forEach(image => {
         const draggedImageId = event.dataTransfer.getData("text");
         const draggedImage = document.getElementById(draggedImageId);
 
-        // swap the elements;
-        const targetElement = event.target;
-        const temp = targetElement;
-        targetElement.id = draggedImage.id;
-        draggedImage.id = temp.id;
+        const targetImage = event.target;
+
+        const tempId = targetImage.id;
+        const tempText = targetImage.textContent;
+
+        // Swap the content (id and text) between the dragged and target divs
+        targetImage.id = draggedImage.id;
+        targetImage.textContent = draggedImage.textContent;
+
+        draggedImage.id = tempId;
+        draggedImage.textContent = tempText;
+
 
     })
     // Optional: Reset the opacity of the image when dragging ends
-    image.addEventListener("dragend", (event)=>{
-        event.target.style.opacity = "1";
-    })
+    // image.addEventListener("dragend", (event)=>{
+    //     event.target.style.opacity = "1";
+    // })
 });
